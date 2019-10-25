@@ -1,0 +1,27 @@
+{"games": 
+  [
+    {
+      "_id":1,
+      "users":["Delta","Hurricane"],
+      "onlineUsers":[],
+      "userCharacters":
+       {
+        "Delta": {"stats": {
+          "attributes": {"STR": "12", "DEX": "15", "CON": "12", "INT": "13", "WIS": "16", "CHA": "18"},
+          "class": "teste",
+          "race": "dwarf",
+          "traits": {"name": "teste", "ca": "8", "hp": "8", "mana": "8", "lv": "8"}
+          }
+        },
+        "Hurricane": {"stats": {
+          "attributes": {"STR": "14", "DEX": "10", "CON": "8", "INT": "18", "WIS": "13", "CHA": "18"},
+          "class": "teste2",
+          "race": "halfOrc",
+          "traits": {"name": "teste2", "ca": "8", "hp": "8", "mana": "8", "lv": "8"}
+          }
+        }
+      }    
+    }
+  ]
+
+}
