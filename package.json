@@ -26,5 +26,16 @@
     "eslint-plugin-standard": "^4.0.1",
     "nodemon": "^1.19.4",
     "rimraf": "^3.0.0"
-  }
+  },
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeltaHurricane/dnd-back.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DeltaHurricane/dnd-back/issues"
+  },
+  "homepage": "https://github.com/DeltaHurricane/dnd-back#readme"
 }
