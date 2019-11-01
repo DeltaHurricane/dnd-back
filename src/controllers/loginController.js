@@ -10,9 +10,9 @@ const loginController = {
 
   read (req, res) {
     console.log(req.body)
-    var games = dataBaseServices.getUsers()
-    games
-      .then((data) => checkUser(data, req.body))
+    var users = dataBaseServices.getUsers()
+    users
+      .then((data) => checkLogin(data, req.body))
       .then((data) => res.send(JSON.stringify(data)))
       .catch((err) => {
         res.status(400).send({ error: `users fetching failed :: ${err}` })
@@ -20,7 +20,7 @@ const loginController = {
   }
 }
 
-function checkUser ({ users }, recived) {
+function checkLogin ({ users }, recived) {
   const checkUser = users.filter((user) => user.username === recived.username)
   if (checkUser.length === 0) {
     // TODO ERROR TROW
