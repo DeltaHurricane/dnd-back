@@ -9,7 +9,6 @@ const loginController = {
   },
 
   read (req, res) {
-    console.log(req.body)
     var users = dataBaseServices.getUsers()
     users
       .then((data) => checkLogin(data, req.body))

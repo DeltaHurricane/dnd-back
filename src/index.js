@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import { apiRouter } from './routes'
+
 //  import auth from './middlewares/authentication'
 
 const app = express()
