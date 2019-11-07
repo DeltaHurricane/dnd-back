@@ -5,14 +5,24 @@ import { Router } from 'express'
 const gamesController = {
   get router () {
     const router = Router()
-    router.get('/:id', this.read)
+    router.get('/:user/', this.read)
+    router.get('/:user/:id', this.fullGameInfo)
     router.post('/', this.create)
-    router.post('/:id', this.update)
+    router.post('/:user/:id', this.update)
     return router
   },
 
+  fullGameInfo (req, res) {
+    Game.findOne({ _id: req.params.id })
+      .then((data) => res.send(data))
+      .catch((err) => {
+        res.status(400).send({ error: `Games fetching failed :: ${err}` })
+      })
+  },
+
   read (req, res) {
-    Game.find({ username: req.params.id })
+    Game.find({ username: req.params.user })
+      .select('name _id')
       .then((data) => res.send(data))
       .catch((err) => {
         res.status(400).send({ error: `Games fetching failed :: ${err}` })
@@ -20,7 +30,12 @@ const gamesController = {
   },
 
   update (req, res) {
-    const query = { name: req.params.id }
+    const query = {
+      $and: [
+        { _id: req.params.id },
+        { username: req.params.user }
+      ]
+    }
     Game.findOne(query, (err, doc) => {
       if (err) {
         res.send(err)
@@ -30,7 +45,6 @@ const gamesController = {
           .then((newChar) => {
             doc.characters.push(newChar)
             doc.save()
-
             res.send({ response: 'character created' })
           })
           .catch((err) => {
