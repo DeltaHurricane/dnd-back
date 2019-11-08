@@ -8,7 +8,7 @@ const gamesController = {
     router.get('/:user/', this.read)
     router.get('/:user/:id', this.fullGameInfo)
     router.post('/', this.create)
-    router.post('/:user/:id', this.update)
+    router.post('/:id', this.update)
     return router
   },
 
@@ -32,8 +32,7 @@ const gamesController = {
   update (req, res) {
     const query = {
       $and: [
-        { _id: req.params.id },
-        { username: req.params.user }
+        { _id: req.params.id }
       ]
     }
     Game.findOne(query, (err, doc) => {
