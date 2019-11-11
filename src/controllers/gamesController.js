@@ -1,11 +1,11 @@
-import { Game } from '../database/models/games'
-import { Character } from '../database/models/character'
+import { Game } from '../database/games'
+import { Character } from '../database/character'
 import { Router } from 'express'
 
 const gamesController = {
   get router () {
     const router = Router()
-    router.get('/:user/', this.read)
+    router.get('/:user', this.read)
     router.get('/:user/:id', this.fullGameInfo)
     router.post('/', this.create)
     router.post('/:id', this.update)

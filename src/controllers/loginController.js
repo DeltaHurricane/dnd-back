@@ -1,37 +1,49 @@
-import dataBaseServices from '../services/dataBaseServices'
+import { User } from '../database/users'
 import { Router } from 'express'
+import bcrypt from 'bcrypt'
+import { generateToken } from '../services/authServices'
 
 const loginController = {
   get router () {
     const router = Router()
     router.post('/', this.read)
+    router.get('/', this.create)
     return router
   },
 
   read (req, res) {
-    var users = dataBaseServices.getUsers()
-    users
-      .then((data) => checkLogin(data, req.body))
-      .then((data) => res.send(JSON.stringify(data)))
+    User.findOne({ username: req.body.username })
+      .select('username _id password')
+      .then((user) => checkLogin(user, req.body))
+      .then((username) => generateToken(username))
+      .then((token) => res.send({ token }))
       .catch((err) => {
-        res.status(400).send({ error: `users fetching failed :: ${err}` })
+        console.log(err)
+        res.status(400).send({ error: `Login Failed :: ${err}` })
+      })
+  },
+
+  create (req, res) {
+    req.body.password = bcrypt.hashSync(req.body.password, 10)
+    User.create(req.body)
+      .then(() => res.send({ response: 'user created' }))
+      .catch((err) => {
+        console.log(err)
+        res.send(err)
       })
   }
 }
 
-function checkLogin ({ users }, recived) {
-  const checkUser = users.filter((user) => user.username === recived.username)
-  if (checkUser.length === 0) {
-    // TODO ERROR TROW
-    return 'fail username'
-  } else {
-    const checkPassword = checkUser.filter((user) => user.password === recived.password)
-    if (checkPassword.length === 0) {
-      // TODO ERROR TROW
-      return 'fail password'
+function checkLogin (user, received) {
+  if (user.username === received.username) {
+    if (bcrypt.compareSync(received.password, user.password)) {
+      return user.username
     } else {
-      return 'ok'
+      throw new Error('Wrong Password')
     }
+  } else {
+    throw new Error('Username Not Found')
   }
 }
+
 export default loginController

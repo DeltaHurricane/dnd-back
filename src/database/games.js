@@ -1,6 +1,6 @@
-import { mongoose } from '../../database'
+import { mongoose } from './connection'
 import { characterSchema } from './character'
-import { toLower } from '../../utils/setters'
+import { toLower } from '../utils/setters'
 
 const gameSchema = new mongoose.Schema({
 

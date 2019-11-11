@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import { mongoose } from './connection'
 import { statsSchema } from './stats'
 
 const characterSchema = new mongoose.Schema({
