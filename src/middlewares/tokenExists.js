@@ -1,15 +1,13 @@
-import jwt from 'jsonwebtoken'
-
-const auth = (req, res, next) => {
+function tokenExists (req, res, next) {
   const bearerHeader = req.headers.authorization
   if (typeof bearerHeader !== 'undefined') {
     const bearer = bearerHeader.split(' ')
     const bearerToken = bearer[1]
-    req.token = jwt.decode(bearerToken)
+    req.token = bearerToken
     next()
   } else {
-    res.sendStatus(403)
+    res.status(401).send({ error: 'No token provided' })
   }
 }
 
-export { auth }
+export { tokenExists }
