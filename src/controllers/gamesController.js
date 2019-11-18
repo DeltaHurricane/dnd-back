@@ -5,8 +5,8 @@ import { Router } from 'express'
 const gamesController = {
   get router () {
     const router = Router()
-    router.get('/:user', this.read)
-    router.get('/:user/:id', this.fullGameInfo)
+    router.get('/user', this.read)
+    router.get('/user/:id', this.fullGameInfo)
     router.post('/', this.create)
     router.post('/:id', this.update)
     return router
@@ -21,7 +21,7 @@ const gamesController = {
   },
 
   read (req, res) {
-    Game.find({ username: req.params.user })
+    Game.find({ username: req.token.username })
       .select('name _id')
       .then((data) => res.send(data))
       .catch((err) => {
