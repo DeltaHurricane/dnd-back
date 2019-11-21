@@ -1,8 +1,9 @@
 import express from 'express'
 import cors from 'cors'
+import socket from 'socket.io'
 import bodyParser from 'body-parser'
 import { apiRouter } from './routes'
-import socket from 'socket.io'
+import { socketInit } from './services/socketServices'
 
 const app = express()
 app.use(cors())
@@ -15,9 +16,6 @@ const server = app.listen(port, () => {
   console.log(`${port}`)
 })
 
-var io = socket(server)
+const io = socket(server)
 
-io.on('connection', (socket) => {
-  console.log('made connection')
-  setTimeout(() => io.emit('FromAPI', 'bobo'), 3000)
-})
+socketInit(io)
